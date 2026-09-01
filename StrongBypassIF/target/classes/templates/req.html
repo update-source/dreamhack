@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Request Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .radio-group label {
+            margin: 0;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+        input[type="text"],
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Enter URL Details</h1>
+    <form action="#" th:action="@{/request}" method="post">
+        <div class="form-group">
+            <label for="scheme">Scheme:</label>
+            <div class="radio-group">
+                <input type="radio" id="http" name="scheme" value="http" required>
+                <label for="http">http</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="https" name="scheme" value="https" required>
+                <label for="https">https</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="userinfo">User Info:</label>
+            <input type="text" id="userinfo" name="userInfo">
+        </div>
+
+        <div class="form-group">
+            <label for="host">Host:</label>
+            <input type="text" id="host" name="host" required>
+        </div>
+
+        <div class="form-group">
+            <label for="path">Path:</label>
+            <input type="text" id="path" name="path">
+        </div>
+
+        <button type="submit">Request</button>
+    </form>
+</div>
+</body>
+</html>
