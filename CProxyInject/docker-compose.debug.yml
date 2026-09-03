@@ -1,0 +1,25 @@
+services:
+  cproxy:
+    command:
+      - /bin/sh
+      - -c
+      - |
+        until nc -z -w1 db 3306; do sleep 1; done
+        exec npm --node-options="--inspect=0.0.0.0:9229" start
+    ports:
+      - "127.0.0.1:9229:9229"
+
+  watchdog:
+    build:
+      context: ./deploy/watchdog
+      dockerfile: Dockerfile.debug
+    command:
+      - /bin/sh
+      - -c
+      - |
+        while :; do
+          python -m debugpy --listen 0.0.0.0:5678 --wait-for-client ./check.py
+          sleep 7
+        done
+    ports:
+      - "127.0.0.1:5678:5678"

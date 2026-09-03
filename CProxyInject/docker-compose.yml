@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.9.3-jammy
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
+    volumes:
+      - ./deploy/db:/docker-entrypoint-initdb.d:ro
+    networks:
+      - internal
+
+  cproxy:
+    build:
+      context: ./deploy/cproxy
+    depends_on:
+      - db
+    networks:
+      - internal
+    ports:
+      - "8082:8080"
+  
+  watchdog:
+    build:
+      context: ./deploy/watchdog
+    depends_on:
+      - cproxy
+    networks:
+      - internal
+
+networks:
+  internal:

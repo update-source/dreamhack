@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Attach cproxy (Node.js)",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9229,
+      "localRoot": "${workspaceFolder}/deploy/cproxy/cproxy",
+      "remoteRoot": "/cproxy",
+      "restart": true,
+      "timeout": 60000,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Docker: Attach watchdog (Python)",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/deploy/watchdog",
+          "remoteRoot": "/home/watchdog"
+        }
+      ],
+      "justMyCode": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Docker: Debug full stack",
+      "configurations": [
+        "Docker: Attach cproxy (Node.js)",
+        "Docker: Attach watchdog (Python)"
+      ],
+      "preLaunchTask": "docker-compose: debug up",
+      "stopAll": true
+    }
+  ]
+}
