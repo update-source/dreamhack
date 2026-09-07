@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  totpSecret String
+  role       Role     @default(user)
+}
+
+model Api {
+  id   Int    @id @default(autoincrement())
+  host String @unique
+  key  String @unique
+}
+
+enum Role {
+  user
+  admin
+} 
